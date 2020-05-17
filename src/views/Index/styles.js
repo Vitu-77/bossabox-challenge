@@ -5,13 +5,12 @@ export const Container = styled.section`
     padding: 64px 0;
     display: flex;
     justify-content: center;
+    background: ${({ theme }) => theme.backgroundPrimary};
     
     & > div {
-        width: 40%;
+        width: 45%;
         display: flex;
         flex-direction: column;
-
-        & > * { width: 100% }
 
         & > header {
             display: flex;
@@ -20,6 +19,14 @@ export const Container = styled.section`
 
             & > h1 {
                 margin-bottom: 2px;
+                font-size: 30px;
+                color: ${({ theme }) => theme.heading};
+            }
+
+            & > h3 {
+                font-size: 20px;
+                font-weight: 400;
+                color: ${({ theme }) => theme.heading};
             }
         }
     }
@@ -33,5 +40,9 @@ export const Toolbar = styled.div`
     & > form {
         display: flex;
         width: max-content;
+
+        & > div:first-child {
+            margin-right: 6px;
+        }
     }
 `;

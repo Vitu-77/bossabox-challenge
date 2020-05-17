@@ -1,8 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
 
-export default createGlobalStyle`
-    @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,300;0,400;0,600;0,900;1,400&display=swap');
-
+export default createGlobalStyle`    
     * {
         margin: 0;
         padding: 0;
@@ -12,7 +10,8 @@ export default createGlobalStyle`
     }
 
     html, body {
-        height: 100%
+        height: 100%;
+        background: ${({ theme }) => theme.backgroundPrimary};
     }
 
     a {

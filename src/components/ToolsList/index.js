@@ -2,14 +2,8 @@ import React from 'react';
 import { List as StyledList } from './styles';
 import Tool from '../Tool';
 
-export default () => (
+export default ({ tools }) => (
     <StyledList>
-        <Tool />
-        <Tool />
-        <Tool />
-        <Tool />
-        <Tool />
-        <Tool />
-        <Tool />
+        {tools.map(tool => <Tool tool={tool} key={tool.id} />)}
     </StyledList>
 )

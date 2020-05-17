@@ -1,14 +1,15 @@
 const lightTheme = {
-    backgroundPrimay: '#FCFCFD',
+    backgroundPrimary: '#FCFCFD',
     backgroundSecondary: '#FFFFFF',
     heading: '#170C3A',
     inputBackground: '#F5F4F6',
-    inputBorder: '#EBEAED',
     lightGrey: '#EBEAED',
     darkGrey: '#B1ADB9',
-    
+    borderPrimary: '#EBEAED',
+    borderSecondary: '#DEDCE1',
+
     primary: {
-        regular: '365DF0',
+        regular: '#365DF0',
         hover: '#2F55CC',
         click: '#244AA8',
         disabled: '#B9C6FA',
@@ -25,7 +26,7 @@ const lightTheme = {
         click: '#A53F3F',
         disabled: '#FCAEAC',
     },
-    alert: {
+    warning: {
         regular: '#FFBB43',
         hover: '#e8a225',
         click: '#ffc04f',
