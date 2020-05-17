@@ -1,1 +1,1 @@
-export const BASE_URL = 'http://localhost:3333'
+export const BASE_URL = 'https://bossabox-fake-api.herokuapp.com/'
