@@ -12,7 +12,7 @@ const get = async (route) => {
         const { data, status } = await api.get(route);
         return { data, status };
     } catch (error) {
-        if (error.response.status) {
+        if (error.response) {
             return {
                 status: error.response.status,
                 data: {}
@@ -31,7 +31,7 @@ const create = async (route, resource) => {
         const { data, status } = await api.post(route, resource);
         return { data, status };
     } catch (error) {
-        if (error.response.status) {
+        if (error.response) {
             return {
                 status: error.response.status,
                 data: {}
@@ -50,7 +50,7 @@ const destroy = async (route) => {
         const { data, status } = await api.delete(route);
         return { data, status };
     } catch (error) {
-        if (error.response.status) {
+        if (error.response) {
             return {
                 status: error.response.status,
                 data: {}
