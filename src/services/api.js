@@ -4,7 +4,10 @@ import { BASE_URL } from '../config';
 const api = axios.create({
     baseURL: BASE_URL,
     timeout: 1000,
-    headers: { 'Content-Type': 'application/json' }
+    headers: { 
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': 'http://localhost:3000'
+    }
 });
 
 const get = async (route) => {
