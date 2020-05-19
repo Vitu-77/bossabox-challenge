@@ -1,4 +1,89 @@
 import styled, { css } from 'styled-components';
+import { Form as Unform } from '@unform/web';
+
+export const Form = styled(Unform)`
+    width: max-content;
+    display: flex;
+    flex-direction: column;
+`;
+
+export const Input = styled.div`
+    display: flex;
+    flex-direction: column;
+    margin-top: 15px;
+
+    &:first-child {
+        margin-top: none;
+    }
+
+    & > label {
+        font-weight: 600;
+        color: ${({ theme }) => theme.heading};
+        margin-bottom: 8px;
+        letter-spacing: 0.4px;
+        font-size: 14px;
+    }
+
+    & > input {
+        outline: none;
+        width: ${({ width }) => `${width}px` || '100%'};
+        font-size: 13.5px;
+        border: 1px solid ${({ theme }) => theme.borderPrimary};
+        background: ${({ theme }) => theme.inputBackground};
+        color: ${({ theme }) => theme.heading};
+        border-radius: 5px;
+        padding: 10px;
+
+        &:focus {
+            background: ${({ theme }) => theme.lightGrey};
+            border-color: ${({ theme }) => theme.borderSecondary};
+        }
+
+        &::placeholder{
+            color: ${({ theme }) => theme.darkGrey};
+            font-size: 13.5px;
+        }
+    }
+`;
+
+export const TextArea = styled.div`
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+
+    & > label {
+        font-weight: 600;
+        color: ${({ theme }) => theme.heading};
+        margin-bottom: 8px;
+        letter-spacing: 0.4px;
+        font-size: 14px;
+    }
+
+    & > textarea {
+        border-radius: 5px;
+        padding: 10px;
+        font-size: 13.5px;
+        outline: none;
+        width: ${({ width }) => `${width}px` || '100%'};
+        min-width: ${({ width }) => `${width}px` || '100%'};
+        max-width: ${({ width }) => `${width}px` || '100%'};
+        border: 1px solid ${({ theme }) => theme.borderPrimary};
+        background: ${({ theme }) => theme.inputBackground};
+        color: ${({ theme }) => theme.heading};
+
+        &:focus {
+            background: ${({ theme }) => theme.lightGrey};
+            border-color: ${({ theme }) => theme.borderSecondary};
+        }
+
+        &::placeholder{
+            color: ${({ theme }) => theme.darkGrey};
+            font-size: 13.5px;
+        }
+    }
+`;
+
+
 
 export const SearchInput = styled.div`
     display: flex;
@@ -64,6 +149,7 @@ export const StyledCheckBox = styled.div`
     }
 
     & > label {
+        font-weight: 600;
         color: ${({ theme }) => theme.heading};
         font-size: 15px;
     }

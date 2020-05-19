@@ -108,6 +108,7 @@ export const Tags = styled.div`
             opacity: 0;
             transition: 300ms;
             transition-delay: 200ms;
+            pointer-events: none;
         }
     }
 `;
