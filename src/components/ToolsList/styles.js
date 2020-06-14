@@ -4,6 +4,23 @@ export const List = styled.ul`
 	padding-top: 12px;
 `;
 
+export const FillWidth = styled.div`
+	width: 100%;
+	text-align: center;
+	padding: 32px;
+
+	& > div {
+		border-color: ${({ theme }) => theme.primary.regular};
+		border-bottom-color: transparent;
+		animation-duration: 1s;
+	}
+
+	& > p.empty {
+		font-size: 20px;
+		color: ${({ theme }) => theme.darkGrey};
+	}
+`;
+
 export const ModalContent = styled.div`
 	display: flex;
 	flex-direction: column;
@@ -46,5 +63,31 @@ export const ModalContent = styled.div`
 				margin-right: 8px;
 			}
 		}
+	}
+`;
+
+export const SearchingByTag = styled.div`
+	width: 100%;
+	display: flex;
+	align-items: center;
+	margin-bottom: 16px;
+
+	& > span {
+		width: 40px;
+		height: 40px;
+		border-radius: 4px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-size: 18px;
+		color: ${({ theme }) => theme.heading};
+		background: ${({ theme }) => theme.backgroundSecondary};
+		border: 1px solid ${({ theme }) => theme.borderPrimary};
+		margin-right: 12px;
+	}
+
+	& > p {
+		font-size: 22px;
+		color: ${({ theme }) => theme.heading};
 	}
 `;

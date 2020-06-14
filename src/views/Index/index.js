@@ -7,8 +7,7 @@ import { ToolsContext } from '../../store/tools/context';
 import Modal from '../../components/modal';
 import ToolsList from '../../components/ToolsList';
 import Suspense from '../../components/Suspense';
-import { Form, Input, TextArea } from '../../components/form';
-import { Search, CheckBox } from '../../components/form';
+import { Form, Input, TextArea, CheckBox, Search } from '../../components/form';
 import { PrimaryButton } from '../../components/buttons';
 import { Container, Toolbar, ModalTitle, ModalButtons } from './styles';
 
@@ -16,9 +15,12 @@ import { IoMdAdd } from 'react-icons/io';
 import { get, create } from '../../services/api';
 
 export default () => {
-	const addModalRef = useRef(null);
+	const addToolModalRef = useRef(null);
 	const formRef = useRef(null);
-	const { tools, setTools } = useContext(ToolsContext);
+
+	const { tools, setTools, setLoadingTools, setSearchingByTag } = useContext(
+		ToolsContext
+	);
 
 	const [loading, setLoading] = useState(true);
 	const [searchTagsOnly, setSearchTagsOnly] = useState(false);
@@ -34,7 +36,7 @@ export default () => {
 		};
 
 		fetch();
-	}, []);
+	}, [setTools]);
 
 	const handleAddTool = async (tool) => {
 		try {
@@ -53,7 +55,7 @@ export default () => {
 			if (response.status === 201) {
 				setTools([{ ...response.data }, ...tools]);
 				formRef.current.reset();
-				return addModalRef.current.closeModal();
+				return addToolModalRef.current.closeModal();
 			}
 		} catch (error) {
 			if (error instanceof Yup.ValidationError) {
@@ -66,22 +68,61 @@ export default () => {
 	};
 
 	const searchTools = async (inputValue) => {
+		const fetch = async (route) => {
+			setLoadingTools(true);
+
+			const { data } = await get(route);
+			setTools(data);
+
+			if (searchTagsOnly) {
+				setSearchingByTag(inputValue);
+			} else {
+				setSearchingByTag('');
+			}
+
+			setTimeout(() => {
+				setLoadingTools(false);
+			}, 400);
+		};
+
 		if (inputValue.length <= 2) {
-			return get('/tools');
+			return fetch('/tools');
 		} else {
 			if (searchTagsOnly) {
-				return get(`/tools?tags_like=${inputValue}`);
+				return fetch(`/tools?tags_like=${inputValue}`);
 			} else {
-				return get(`/tools?q=${inputValue}`);
+				return fetch(`/tools?q=${inputValue}`);
 			}
 		}
 	};
 
-	const debounce = AwesomeDebouncePromise(searchTools, 1500);
+	const debounce = AwesomeDebouncePromise(searchTools, 500);
+
+	const handleSearch = async ({ search }) => {
+		if (!search.length) return;
+
+		if (searchTagsOnly) {
+			setLoadingTools(true);
+
+			const response = await get(`/tools?tags_like=${search}`);
+			setSearchingByTag(search);
+			setTools(response.data);
+
+			setLoadingTools(false);
+		} else {
+			setLoadingTools(true);
+
+			const response = await get(`/tools?q=${search}`);
+			setSearchingByTag('');
+			setTools(response.data);
+
+			setLoadingTools(false);
+		}
+	};
 
 	return (
 		<Container>
-			<Modal ref={addModalRef}>
+			<Modal ref={addToolModalRef}>
 				<Form ref={formRef} onSubmit={handleAddTool}>
 					<ModalTitle>
 						<IoMdAdd /> Add new tool
@@ -103,13 +144,11 @@ export default () => {
 						<h3>Very Usefull Tools to Remember</h3>
 					</header>
 					<Toolbar>
-						<form>
+						<Form onSubmit={handleSearch}>
 							<Search
+								name='search'
 								placeholder='Pesquisar...'
-								onChange={async (e) => {
-									const response = await debounce(e.target.value);
-									console.log(response);
-								}}
+								onChange={async (e) => await debounce(e.target.value)}
 							/>
 							<CheckBox
 								label='Search in tags only'
@@ -117,8 +156,8 @@ export default () => {
 								onCheck={() => setSearchTagsOnly(true)}
 								onUncheck={() => setSearchTagsOnly(false)}
 							/>
-						</form>
-						<PrimaryButton onClick={() => addModalRef.current.openModal()}>
+						</Form>
+						<PrimaryButton onClick={() => addToolModalRef.current.openModal()}>
 							<IoMdAdd />
 							Adicionar
 						</PrimaryButton>
